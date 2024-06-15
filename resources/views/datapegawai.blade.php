@@ -48,7 +48,7 @@
                     <td>{{ $row->created_at->diffForHumans()}}</td>
                     <td>
                         <a href="/tampilkandata/{{ $row->id }}" class="btn btn-warning"> <i class="fa-solid fa-pen-to-square"></i> </a>
-                        <a href="/delete/{{ $row->id }}" class="btn btn-danger"> <i class="fa-solid fa-trash"></i> </a>
+                        <a href="#" class="btn btn-danger delete" data-id="{{ $row->id}}" data-nama="{{ $row->nama }}"> <i class="fa-solid fa-trash"></i> </a>
                     </td>
                 </tr>
 
@@ -58,5 +58,32 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="/script.js"></script>
-    </body>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script>
+        $('.delete').click(function(){
+            var pegawaiid = $(this).attr('data-id');
+            var pegawainama = $(this).attr('data-nama');
+            Swal.fire({
+            title: "Yakin ?",
+            text: "Kamu akan menghapus data pegawai " + pegawainama +" ? ",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+            if (result.isConfirmed) {
+                window.location = "/delete/" + pegawaiid
+                Swal.fire({
+                    title: "Deleted!",
+                text: "Data Berhasil Dihapus",
+                icon: "success"
+                });
+            }
+            });
+        })
+
+    </script>
+</body>
 </html>
